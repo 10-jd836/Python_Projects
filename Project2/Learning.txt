@@ -5,3 +5,4 @@ Neural networks process small decimals much better than large integers.
 
 Line 10 onwards, Plots a 4x4 grid of 16 images. Loops through the dataset to display each image, removes the axis ticks for a clean look, and labels each one using the text name 
 corresponding to its numerical label (e.g., matching code 3 to "Cat").
+
