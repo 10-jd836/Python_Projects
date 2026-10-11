@@ -62,19 +62,23 @@ Earlier versions of `main.py` are available in the repository's Git history.
 They used TensorFlow/Keras rather than PyTorch and had a simpler convolutional
 network:
 
+- `6d9bb85` was an MNIST experiment: it loaded and displayed training examples
+  labeled with their digit classes. It did not define or train a model, and it
+  did not explicitly force CPU execution.
 - `6d0612d` introduced CIFAR-10 loading and image visualization with
   TensorFlow/Keras.
-- `c8dc440` added a basic CNN and trained it for 10 epochs.
+- `c8dc440` added a basic CNN and trained it for 10 epochs on CIFAR-10.
 - `787fce1` retained the 10-epoch CNN while adding image prediction and
   preprocessing/error handling.
 - `3bedaef` increased training to 20 epochs, added `Dropout(0.5)`, and added
   prediction for four images.
 
-These versions did not explicitly select or move work to a CUDA device. They
-used TensorFlow's default device placement, which could use an available GPU
-automatically; they were not explicitly restricted to CPU. The current version
-instead selects CUDA when PyTorch reports it is available, falls back to CPU
-otherwise, and trains for 25 epochs.
+The TensorFlow CNN versions did not explicitly select or move work to a CUDA
+device. They used TensorFlow's default device placement, which could use an
+available GPU automatically; they were not explicitly restricted to CPU. The
+MNIST experiment likewise did not set a device, and it only visualized samples.
+The current version instead selects CUDA when PyTorch reports it is available,
+falls back to CPU otherwise, and trains for 25 epochs.
 
 To inspect an older script version, run this from the repository root:
 
@@ -83,4 +87,4 @@ git show 3bedaef:Project2/main.py
 ```
 
 Replace `3bedaef` with another commit ID above to inspect that version, for
-example `git show 6d0612d:Project2/main.py`.
+example `git show 6d9bb85:Project2/main.py` for the MNIST experiment.
