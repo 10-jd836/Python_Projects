@@ -21,37 +21,41 @@ class_names = ['Plane', 'Car', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'S
 
 # -- BUILDING/TRAINING/COMPILING CNN MODEL 
 # Convolutional Layers
-# model = models.Sequential()
-# model.add(layers.Conv2D(32, (3,3), activation='relu', input_shape=(32,32,3)))
-# model.add(layers.MaxPooling2D((2,2)))
-# model.add(layers.Conv2D(64, (3,3), activation='relu'))
-# model.add(layers.MaxPooling2D((2,2)))
-# model.add(layers.Conv2D(64, (3,3), activation='relu'))
-# model.add(layers.Flatten())
-# model.add(layers.Dense(64, activation='relu'))
-# model.add(layers.Dense(10, activation='softmax'))
+model = models.Sequential()
+model.add(layers.Conv2D(32, (3,3), activation='relu', input_shape=(32,32,3)))
+model.add(layers.MaxPooling2D((2,2)))
+model.add(layers.Conv2D(64, (3,3), activation='relu'))
+model.add(layers.MaxPooling2D((2,2)))
+model.add(layers.Conv2D(64, (3,3), activation='relu'))
+model.add(layers.Flatten())
+model.add(layers.Dense(64, activation='relu'))
+model.add(layers.Dropout(0.5))
+model.add(layers.Dense(10, activation='softmax'))
 
-# model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # -- EVALUATION
-# model.fit(training_images, training_labels, epochs=10, validation_data=(testing_images, testing_labels))
-# loss, accuracy = model.evaluate(testing_images, testing_labels)
-# print(f"Loss: {loss}")
-# print(f"Accuracy: {accuracy}")
+model.fit(training_images, training_labels, epochs=20, validation_data=(testing_images, testing_labels))
+loss, accuracy = model.evaluate(testing_images, testing_labels)
+print(f"Loss: {loss}")
+print(f"Accuracy: {accuracy}")
 
-# model.save('image_classifier.keras')
+model.save('image_classifier.keras')
 
 model = models.load_model("image_classifier.keras")
 
-img = cv.imread('deer.jpg')
-img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+image_files = ['deer.jpg', 'car.jpg', 'horse.jpg', 'plane.jpg']
 
-plt.imshow(img, cmap=plt.cm.binary)
+for filename in image_files:
+    img = cv.imread(filename)
+    if img is None:
+        print(f"Could not read image: {filename}")
+        continue
 
+    img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    img = cv.resize(img, (32, 32))
 
-prediction = model.predict(np.array([img]) / 255)
-index = np.argmax(prediction)
-print(f'Prediction is {class_names[index]}')
-
-plt.show()
+    prediction = model.predict(np.array([img]) / 255, verbose=0)
+    index = np.argmax(prediction)
+    print(f"{filename}: Predicted class is {class_names[index]}")
 
