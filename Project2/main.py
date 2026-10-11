@@ -12,10 +12,10 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 epochs = 25
 batch_size = 128
 
-data_dir = Path(__file__).resolve().parent / 'data' / 'cifar-10-batches-py'
+data_dir = Path(__file__).resolve().parent / 'data'
 transform = transforms.ToTensor()
-training_dataset = datasets.CIFAR10(root=str(data_dir), train=True, download=False, transform=transform)
-testing_dataset = datasets.CIFAR10(root=str(data_dir), train=False, download=False, transform=transform)
+training_dataset = datasets.CIFAR10(root=str(data_dir), train=True, download=True, transform=transform)
+testing_dataset = datasets.CIFAR10(root=str(data_dir), train=False, download=True, transform=transform)
 training_loader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True)
 testing_loader = DataLoader(testing_dataset, batch_size=batch_size, shuffle=False)
 

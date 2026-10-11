@@ -12,31 +12,33 @@ of four image files.
 - NumPy
 - OpenCV (`cv2`)
 
-## Local CIFAR-10 data
+## CIFAR-10 data
 
-The script uses the CIFAR-10 files already on disk and does not download the
-dataset. The expected directory layout is:
+On the first run, torchvision downloads and extracts CIFAR-10 into the
+`data/` directory if the dataset is not already present. The expected extracted
+directory layout is:
 
 ```text
 Project2/
 |-- main.py
 |-- data/
     |-- cifar-10-batches-py/
-        |-- cifar-10-batches-py/
-            |-- batches.meta
-            |-- data_batch_1
-            |-- data_batch_2
-            |-- data_batch_3
-            |-- data_batch_4
-            |-- data_batch_5
-            |-- test_batch
+        |-- batches.meta
+        |-- data_batch_1
+        |-- data_batch_2
+        |-- data_batch_3
+        |-- data_batch_4
+        |-- data_batch_5
+        |-- test_batch
 ```
 
-The inner `cifar-10-batches-py` folder contains the extracted dataset files.
-`main.py` locates the data relative to its own location and configures both
-training and test datasets with `download=False`. If these extracted files are
-missing or incomplete, the dataset loader reports an error instead of fetching
-the dataset remotely.
+To avoid a download, place the official `cifar-10-python.tar.gz` archive in
+`Project2/data/` before running the script. Torchvision can use the local
+archive and extract it into the directory shown above. Alternatively, put the
+extracted batch files directly inside `Project2/data/cifar-10-batches-py/` (not
+inside an additional nested `cifar-10-batches-py/` folder). `main.py` resolves
+`data/` relative to its own location and enables torchvision's download handling
+for both dataset splits.
 
 ## Run
 
@@ -45,6 +47,9 @@ From the `Project2` directory, run:
 ```bash
 python main.py
 ```
+
+The first run needs an internet connection unless the official archive or
+extracted dataset is already in `data/`.
 
 The script automatically selects CUDA when available and otherwise uses the
 CPU. It trains for 25 epochs with batches of 128, prints training and test-set

@@ -1,0 +1,10 @@
+# CIFAR-10 archives and extracted dataset
+/data/
+
+# Trained model checkpoints
+*.pth
+*.keras
+
+# Python bytecode
+__pycache__/
+*.py[cod]
