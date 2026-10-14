@@ -1,4 +1,4 @@
-# Project 3: Article Sentiment
+# Article Sentiment
 
 This script downloads an online article, extracts its summary, and uses TextBlob to classify the summary's sentiment as **Positive**, **Neutral**, or **Negative**.
 
